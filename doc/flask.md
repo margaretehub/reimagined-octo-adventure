@@ -17,7 +17,7 @@ Characters that have special meanings are replaced so that they display as the a
 
 A quote from a source code commit:
 
-´´´
+'''
 python
 class Markup(str):
     """A string that is ready to be safely inserted into an HTML or XML
@@ -49,7 +49,7 @@ class Markup(str):
     Markup('<em>Hello</em> &lt;foo&gt;')
     """
 
-´´´
+'''
 
 Pivotal methods are:
 
