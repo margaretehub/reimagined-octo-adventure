@@ -17,7 +17,8 @@ Characters that have special meanings are replaced so that they display as the a
 
 A quote from a source code commit:
 
-´´´python
+´´´
+python
 class Markup(str):
     """A string that is ready to be safely inserted into an HTML or XML
     document, either because it was escaped or because it was marked
@@ -48,11 +49,13 @@ class Markup(str):
     Markup('<em>Hello</em> &lt;foo&gt;')
     """
 
-   ‘‘’
+´´´
 
 Pivotal methods are:
 
-‘‘’
+
+
+´´´
 escape('any object')
 # returns a Markupstring with the escaped text
 Markup('any')
@@ -64,4 +67,4 @@ Markup('any').striptags()
 Markup().escape('any')
 # escapes..
 
-‘‘’
+´´´
