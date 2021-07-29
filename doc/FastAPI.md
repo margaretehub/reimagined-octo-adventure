@@ -4,7 +4,7 @@ Within a few steps it's possible to create an API that is controlled by the **UR
 
 Also included in the framework is a automatic API-documentation:  */docs*
 
-![docs FastAPI](./pictures/Screenshot)
+[docs FastAPI](./pictures/Screenshot)
 
 And it's also possible to write the API as an __asynchronous__ application
 
