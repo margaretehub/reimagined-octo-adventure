@@ -6,3 +6,4 @@
 ### Within the [**doc** folder](/./doc):
 
 1. Discovering [flask](/./doc/flask.md)
+2. Introduction to [FastAPI](/./doc/FastAPI.md)
