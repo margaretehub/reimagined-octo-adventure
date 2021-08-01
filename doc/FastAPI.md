@@ -10,9 +10,7 @@ And it's also possible to write the API as an __asynchronous__ application
 
 ## The idea of asynchrony in python:
 
-Fast application need smart programming, in order to get for example a server application that can handle the needs of different parts of a program,  
-different modules or functions that need to wait the results of each other,  
-that's what asynchronous programming is for.
+Fast application need smart programming, in order to get for example a server application that can handle the needs of different parts of a program, different modules or functions that need to wait the results of each other, that's what asynchronous programming is for.
 
 In python the syntax for it are the **coroutines** in the module **asyncio**:
 
@@ -27,10 +25,10 @@ The difference between **threads** and **coroutines** is: By using threads the o
 ![Overview Catperson API](./pictures/cat_overview.png)
 
 There are a few parts to take care of to write a MongoDB with a FastAPI framework.  
-In my [example API](./cat/app.py)
+My first small [example API](./cat/app.py) is a initial attempt, a small modification of [this](https://github.com/mongodb-developer/mongodb-with-fastapi#readme) source code, i will go through the code step by step and illuminate and understand the individual components. 
 1. Connection:
 
-For the connection purpose I use the [**motor**](https://motor.readthedocs.io/en/stable/) API:
+For the connection purpose it is using the [**motor**](https://motor.readthedocs.io/en/stable/) API:
 
 ```python
 app = FastAPI()
@@ -44,7 +42,7 @@ The **MONGODB_URL** environment string is the connection string. It looks like t
 "mongodb+srv://<username>:<password>@<url>/<db>?retryWrites=true&w=majority"
 ```
 
-But just to try it out, these string can be used:
+But just to try it out, this string can be used:
 
 ```
 "mongodb://localhost:270172"
