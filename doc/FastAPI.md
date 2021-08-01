@@ -22,6 +22,30 @@ __async__ marks the methods as asynchronous methods, __await__ is the checkpoint
 
 The difference between **threads** and **coroutines** is: By using threads the operating system decides to switch to another task. Coroutines only switches when there is an "await".  
 
-## Implementing a No-SQL database into FastAPI framework
+## Implementing a MongoDB database into FastAPI framework
 
-(more soon..)
+![Overview Catperson API](./pictures/overview_catperson.png)
+
+There are a few parts to take care of to write a MongoDB with a FastAPI framework.  
+In my [example API](./catpersons/app.py)
+1. Connection:
+
+For the connection purpose I use the [**motor**](https://motor.readthedocs.io/en/stable/) API:
+
+```python
+app = FastAPI()
+client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
+db = client.catworld
+```
+
+The **MONGODB_URL** environment string is the connection string. It looks like this:
+
+```
+"mongodb+srv://<username>:<password>@<url>/<db>?retryWrites=true&w=majority"
+```
+
+But just to try it out, these string can be used:
+
+```
+mongodb://localhost:27017
+```
