@@ -25,7 +25,7 @@ The difference between **threads** and **coroutines** is: By using threads the o
 ![Overview Catperson API](./pictures/cat_overview.png)
 
 There are a few parts to take care of to write a MongoDB with a FastAPI framework.  
-My first small [example API](./cat/app.py) is a initial attempt, a small modification of [this](https://github.com/mongodb-developer/mongodb-with-fastapi#readme) source code, i will go through the code step by step and illuminate and understand the individual components. 
+My first small [example API](./cat/app.py) is a initial attempt, a small modification of [this](https://github.com/mongodb-developer/mongodb-with-fastapi#readme) source code, I will go through the code step by step and illuminate and understand the individual components. 
 1. Connection:
 
 For the connection purpose it is using the [**motor**](https://motor.readthedocs.io/en/stable/) API:
