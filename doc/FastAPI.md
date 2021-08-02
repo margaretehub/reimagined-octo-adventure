@@ -154,4 +154,4 @@ and also a __validation method__ that checks if the given string is a valid Obje
 ```Python
 bson.objectid.ObjectId.is_valid(str)
 ```
-[Look](##So-what-does-pydantic?)
+[Look](#so-what-does-pydantic)
