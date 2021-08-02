@@ -25,7 +25,7 @@ The difference between **threads** and **coroutines** is: By using threads the o
 ![Overview Catperson API](./pictures/cat_overview.png)
 
 There are a few parts to take care of to write a MongoDB with a FastAPI framework.  
-My first small [example API](./cat/app.py) is a initial attempt, a small modification of [this](https://github.com/mongodb-developer/mongodb-with-fastapi#readme) source code, I will go through the code step by step and illuminate and understand the individual components. 
+My first small [example API](./cat/app.py) is a initial attempt, a small modification of [this](https://github.com/mongodb-developer/mongodb-with-fastapi#readme) source code, I will go through the code step by step and illuminate and understand the individual components.
 1. Connection:
 
 For the connection purpose it is using the [**motor**](https://motor.readthedocs.io/en/stable/) API:
@@ -46,4 +46,89 @@ But just to try it out, this string can be used:
 
 ```
 "mongodb://localhost:270172"
+```
+2. Data validation with pydantic:
+
+FastAPI uses the [**pydantic**](https://pydantic-docs.helpmanual.io) library to review and process the data. It's a quick, but easy-to-use package. To create a pydantic model to use it in FastAPI a self-created Class has to inherit the pydantic **BaseModel**:
+
+```Python
+from pydantic import BaseModel, Field
+from typing import Optional, List
+
+class CatModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    # It's something special going on with PyObjectId ... more later
+    catname: str = Field(...)
+    skill: str = Field(...)
+    strength: float = Field(..., le=4.0)
+
+```
+The propertys of CatModel are surrounded with [__type annotations__](https://docs.python.org/3/library/typing.html#module-typing). Type annotations in python **are not effecting the compiler or runtime**, there will be no error caused of missmatching the annotations, maybe this could be missleading. Rather they are notes in the code for developers.
+
+The syntax is:
+
+```Python
+# For variables:
+<variablename>: <type>
+# For functions:
+def <functionname>(<parameter>) -> <type>:
+# Type annotations are hints what type is required for the variable
+# or what kind of return-type of a function is expected
+
+```
+
+So what does pydantic?
+
+Pydantic converts data in python format, in this case: It attempts to coerce it in the annotated type. There is also the possibility to mark the type of the model as __Optional__ or to provide default values. And it provides very detailed error messages:
+
+This code:
+
+```Python
+from pydantic import BaseModel, Field, ValidationError
+from typing import Optional, List
+from bson import ObjectId
+
+class PyObjectId(ObjectId):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if not ObjectId.is_valid(v):
+            raise ValueError("Invalid objectid")
+        return ObjectId(v)
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(type="string")
+
+
+class CatModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    catname: str = Field(...)
+    skill: str = Field(...)
+    strength: float = Field(..., le=4.0)
+
+try:
+    cat = CatModel(id='human', catname='Waltraud', skill='Fight with Axes', strength='She can prevail')
+    print(cat)
+except ValidationError as e:
+    print(e.json())
+```
+
+Comes to this output:
+
+```Python
+
+[
+  {
+    "loc": [
+      "strength"
+    ],
+    "msg": "value is not a valid float",
+    "type": "type_error.float"
+  }
+]
+
 ```
