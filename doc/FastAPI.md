@@ -77,7 +77,7 @@ def <functionname>(<parameter>) -> <type>:
 
 ```
 
-So what does pydantic?
+## So what does pydantic?
 
 Pydantic converts data in python format, in this case: It attempts to coerce it in the annotated type. There is also the possibility to mark the type of the model as __Optional__ or to provide default values. And it provides very detailed error messages:
 
@@ -86,7 +86,7 @@ This code:
 ```Python
 from pydantic import BaseModel, Field, ValidationError
 from typing import Optional, List
-from bson import ObjectId
+from BSON import ObjectId
 
 class PyObjectId(ObjectId):
     @classmethod
@@ -111,7 +111,7 @@ class CatModel(BaseModel):
     strength: float = Field(..., le=4.0)
 
 try:
-    cat = CatModel(id='human', catname='Waltraud', skill='Fight with Axes', strength='She can prevail')
+    cat = CatModel(catname='Waltraud', skill='Fight with Axes', strength='She can prevail')
     print(cat)
 except ValidationError as e:
     print(e.json())
@@ -132,3 +132,26 @@ Comes to this output:
 ]
 
 ```
+
+And now to the **PyObjectId** class:
+The PyObjectId inherits from **BSONs ObjectId** let's take a closer look in it.
+
+## [BSON's ObjectId](https://docs.mongodb.com/manual/reference/method/ObjectId/):
+
+ObjectId is an extremely clever data type from the Mongo database. It not only guarantees unique IDs, but also saves the creation date, as a timestamp, in the same pass with in the ObjectId.
+
+[Here](https://BSONspec.org/spec.html) is the specification of BSON in a pseudo-BFN syntax.
+This element of the BSON document has a size of 12 byte.
+
+The ObjectId also has a property the __timestamp__ that is reachable with the:
+
+```Python
+bson.objectid.ObjectId.generation_time
+```
+
+and also a __validation method__ that checks if the given string is a valid ObjectId or not:
+
+```Python
+bson.objectid.ObjectId.is_valid(str)
+```
+[Look](## So-what-does-pydantic?)
