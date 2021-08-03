@@ -165,7 +165,7 @@ The classmethod passes a **class object** instead of a **class instance** (expli
 
 ## Creating an own pydantic data type:
 
-There a few ways to create a own datatype,sx for the case of **ObjectId** it's really important, because there is no pythonic datatype like this:
+There a few ways to create a own datatype. For the case of **ObjectId** it's really important, because there is no pythonic datatype like this.
 
 A type that can be build, for that reason uses FastAPI at least three decorated methods:
 
