@@ -154,4 +154,23 @@ and also a __validation method__ that checks if the given string is a valid Obje
 ```Python
 bson.objectid.ObjectId.is_valid(str)
 ```
-[Look](#so-what-does-pydantic)
+[Look](#so-what-does-pydantic) upwards in the code there in the PyObjectId this particular ObjectId-method is found inside the **validate-method**.
+[\@classmethod](https://docs.python.org/3/library/functions.html#classmethod) is a wrapper:
+[The difference between classmethod and staticmethod:]()
+The classmethod passes a **class object** instead of a **class instance** (explict: _self_)
+...
+
+
+## Creating an own pydantic data type:
+
+There a few ways to create a own datatype for the case of **ObjectId** it's really important, because there is no pythonic datatype like this:
+
+A type that can be used by FastAPI has to have at least three decorated methods:
+
+```python
+__get_validators__()
+# That yield cls.validate
+__modify_schema__()
+validate()
+
+```
