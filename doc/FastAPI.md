@@ -213,7 +213,7 @@ class CatModel(BaseModel):
     #
     catname: str = Field(...)
     # To declare a field as required, you may declare it using just an annotation,
-    # or you may use an ellipsis (...) as the value:
+    # or you may use an ellipsis (...) as the value
     skill: str = Field(...)
     strength: float = Field(..., le=4.0)
 ```
