@@ -160,14 +160,14 @@ bson.objectid.ObjectId.is_valid(str)
 [\@classmethod](https://docs.python.org/3/library/functions.html#classmethod) is a decorator:
 [The difference between classmethod and staticmethod:](./classmeth_vs_staticmeth.md)
 The classmethod passes a **class object** instead of a **class instance** (explict: _self_)
-...
+
 
 
 ## Creating an own pydantic data type:
 
-There a few ways to create a own datatype for the case of **ObjectId** it's really important, because there is no pythonic datatype like this:
+There a few ways to create a own datatype,sx for the case of **ObjectId** it's really important, because there is no pythonic datatype like this:
 
-A type that can be used by FastAPI has to have at least three decorated methods:
+A type that can be build, for that reason uses FastAPI at least three decorated methods:
 
 ```python
 __get_validators__()
