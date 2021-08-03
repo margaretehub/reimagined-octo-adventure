@@ -33,9 +33,10 @@ print()
 # !this could lead to problems and it's dangerous!
 paw.some_classmethod(1, 2, a=3, b=4)
 print()
-#
+# The class-method can be used like a instance-method with an object.
 Paw.some_classmethod()
 print()
+# But the speciality of the class-method is that you
 Paw.some_classmethod(1, 2, a=3, b=4)
 print()
 paw.some_staticmethod(1, 2, a=3, b=4)

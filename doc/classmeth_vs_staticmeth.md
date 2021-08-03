@@ -74,3 +74,9 @@ kwargs: {}
 args: (1, 2)
 kwargs: {'a': 3, 'b': 4}
 ```
+
+An **instance-method** is passed as the first parameter _self_. Via the _self_-parameter, the method has access to all properties of the instance from which the method is later called.
+
+Now comes the **\@classmethod** definition. Basically, this can also be called like an instance method. But the difference is that the classmethod can be called within the class. It's first argument is the class itself (the parameter **_cls_** )
+
+A static-method is always callable, it doesn't matter if on an instance or from the class itself and it doesn't receive any reference argument. 

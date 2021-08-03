@@ -155,8 +155,10 @@ and also a __validation method__ that checks if the given string is a valid Obje
 bson.objectid.ObjectId.is_valid(str)
 ```
 [Look](#so-what-does-pydantic) upwards in the code there in the PyObjectId this particular ObjectId-method is found inside the **validate-method**.
-[\@classmethod](https://docs.python.org/3/library/functions.html#classmethod) is a wrapper:
-[The difference between classmethod and staticmethod:]()
+
+
+[\@classmethod](https://docs.python.org/3/library/functions.html#classmethod) is a decorator:
+[The difference between classmethod and staticmethod:](./classmeth_vs_staticmeth.md)
 The classmethod passes a **class object** instead of a **class instance** (explict: _self_)
 ...
 
@@ -169,8 +171,49 @@ A type that can be used by FastAPI has to have at least three decorated methods:
 
 ```python
 __get_validators__()
-# That yield cls.validate
 __modify_schema__()
 validate()
 
+```
+Let's have again a deepeer look into the CatModel example:
+
+```python
+
+class PyObjectId(ObjectId):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+        # This will yield the proper validate methods
+
+    @classmethod
+    def validate(cls, v):
+        if not ObjectId.is_valid(v):
+            raise ValueError("Invalid objectid")
+        return ObjectId(v)
+        # This will be used to validate the value in the way we want it to be
+        # It returns an object:
+        # An ObjectId-object that will be stored as PyObjectId
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(type="string")
+        # Here the field_schema-dict is updated to the type: 'string'
+
+
+class CatModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    # The default factory is used in case no value is given
+    # The PyObjectId inherits from ObjectId from pymongos bson that creates a
+    # ObjectId by calling the class:
+    #
+    # >>> from bson import ObjectId
+    # >>> ObjectId()
+    # ObjectId('61095187da5556bd5cc9a4f7')
+    #
+    #
+    catname: str = Field(...)
+    # To declare a field as required, you may declare it using just an annotation,
+    # or you may use an ellipsis (...) as the value:
+    skill: str = Field(...)
+    strength: float = Field(..., le=4.0)
 ```
