@@ -217,3 +217,9 @@ class CatModel(BaseModel):
     skill: str = Field(...)
     strength: float = Field(..., le=4.0)
 ```
+'...' is the literal for the special value _Ellipsis_ a build-in constant of python.
+'A(s) non-used literal, you can use the ellipsis object.'
+'So if you see yourself in the situation that you are developing a new tool or library and need a placeholder literal, remind yourself of the ellipsis object!' Quotes from Florian Daliz: [What is Python's Ellipsis Object?](https://florian-dahlitz.de/articles/what-is-pythons-ellipsis-object)
+
+
+## The **Config**-sub-class of pydantics **BaseModel**:
