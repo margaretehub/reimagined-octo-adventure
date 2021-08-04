@@ -223,3 +223,17 @@ class CatModel(BaseModel):
 
 
 ## The **Config**-sub-class of pydantics **BaseModel**:
+
+```python
+class Config:
+      allow_population_by_field_name = True
+      arbitrary_types_allowed = True
+      json_encoders = {ObjectId: str}
+      schema_extra = {
+          "example": {
+              "catname": "Kitty Lilly",
+              "skill": "Drinks Seawater, Knows How To Deal With Hairballs",
+              "strength": "13.0",
+          }
+      }
+```
