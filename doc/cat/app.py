@@ -32,7 +32,7 @@ class CatModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     catname: str = Field(...)
     skill: str = Field(...)
-    strength: float = Field(..., le=4.0)
+    strength: float = Field(..., le=100.0)
 
     class Config:
         allow_population_by_field_name = True
@@ -68,21 +68,17 @@ class UpdateCatModel(BaseModel):
 async def create_cat(cat: CatModel = Body(...)):
     cat = jsonable_encoder(cat)
     new_cat = await db["cats"].insert_one(cat)
-    created_cats = await db["cats"].find_one({"_id": new_cats.inserted_id})
+    created_cat = await db["cats"].find_one({"_id": new_cat.inserted_id})
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_cat)
 
 
-@app.get(
-    "/", response_description="List all cats", response_model=List[CatModel]
-)
+@app.get("/", response_description="List all cats", response_model=List[CatModel])
 async def list_cats():
     cats = await db["cats"].find().to_list(1000)
     return cats
 
 
-@app.get(
-    "/{id}", response_description="Get a single cat", response_model=CatModel
-)
+@app.get("/{id}", response_description="Get a single cat", response_model=CatModel)
 async def show_cat(id: str):
     if (cat := await db["cats"].find_one({"_id": id})) is not None:
         return cat
@@ -98,9 +94,7 @@ async def update_cat(id: str, cat: UpdateCatModel = Body(...)):
         update_result = await db["cats"].update_one({"_id": id}, {"$set": cat})
 
         if update_result.modified_count == 1:
-            if (
-                updated_cat := await db["cats"].find_one({"_id": id})
-            ) is not None:
+            if (updated_cat := await db["cats"].find_one({"_id": id})) is not None:
                 return updated_cat
 
     if (existing_cat := await db["cats"].find_one({"_id": id})) is not None:

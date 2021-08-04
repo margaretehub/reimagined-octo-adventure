@@ -45,4 +45,4 @@ class CatToyVerbose:
         return self.__dict__ == other.__dict__      
  ```
 
-(The \_\_repr\_\_ method returns an string that can be used to instance the class. It is callable with the [**repr(object)**](https://docs.python.org/3/library/functions.html#repr) method and in case it's possible returnable with [**eval(expression[, globals[, locals]])**](https://docs.python.org/3/library/functions.html#eval)  
+The \_\_repr\_\_ method returns an string that can be used to instance the class. It is callable with the [**repr(object)**](https://docs.python.org/3/library/functions.html#repr) method and in case it's possible returnable with [**eval(expression[, globals[, locals]])**](https://docs.python.org/3/library/functions.html#eval)  

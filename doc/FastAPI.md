@@ -221,6 +221,19 @@ class CatModel(BaseModel):
 'A(s) non-used literal, you can use the ellipsis object.'
 'So if you see yourself in the situation that you are developing a new tool or library and need a placeholder literal, remind yourself of the ellipsis object!' Quotes from Florian Daliz: [What is Python's Ellipsis Object?](https://florian-dahlitz.de/articles/what-is-pythons-ellipsis-object)
 
+## The **Field(...)**
+The Field()-instance allows to change settings for a several Field like:
+It's like the little sister of the Config subclass, the Config subclass property applies for all fields in the class, but the Field() specifications just for the one field.
+The first argument is the **default** value of the field, the **ellipsis** shows there that the field is required.
+Instead of using default, **default_factory** can be used. The default_factory needs a callable element that returns a standard value for the field.
+**alias** is the public name of the field. **description**, the description of the field uses if not declared, the docstring if possible of the annotation.
+The **title** value is created with field_name.title(), if not declared in the Field()-instance.
+**gt**, **ge**, **lt**, **le**, **multiple_of** are mathematical validations.
+**min_items** and **max_items** are determinations for _list_ values.
+**min_length** and **max_length** are determinations for _string_ values.
+
+
+
 
 ## The **Config**-sub-class of pydantics **BaseModel**:
 
@@ -237,3 +250,31 @@ class Config:
           }
       }
 ```
+The Config class is a class in the class that inherits from BaseModel. In Config all of the Configuration-Data is saved, that regards the parsing. It's possible to decide the maximum or minimum length of a string, to strip the whitespaces, if it's allowed to assign extra attributes by initialisation.
+
+```python
+allow_mutation default:False
+# Allows the reassigning of the the field or not
+frozen default: True
+# Is similar to allow_mutation=False when True, but additional it generates a __hash__() method for the model
+# That makes it hashable
+use_enum_values default: False
+# If it's True than it uses the number assigned to the particular Enum to safe the value
+fields type: dict
+# Adds schema information for each field like this:
+# fields = {
+#           'auth_key': {
+#               'env': 'my_auth_key',
+#           },
+#           'redis_dsn': {
+#               'env': ['service_redis_dsn', 'redis_url']
+#           }
+#       }
+validate_assignment default: False
+#
+allow_population_by_field_name default: False
+# access to population of a field by field-name and alias
+error_msg_templates type: dict
+# allows to override the error message templates
+arbitrary_types_allowed default: False
+#
