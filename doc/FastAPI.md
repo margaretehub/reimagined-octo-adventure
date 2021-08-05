@@ -273,8 +273,52 @@ fields type: dict
 validate_assignment default: False
 #
 allow_population_by_field_name default: False
-# access to population of a field by field-name and alias
+# Access to population of a field by field-name and alias
 error_msg_templates type: dict
-# allows to override the error message templates
+# Allows to override the error message templates
 arbitrary_types_allowed default: False
+# In my example I am using the arbitrary_types_allowed configuration to allow CatModel to use the self-made Class PyObjectId  
+orm_mode default: False
+# Allows to retrieve data from object–relational mapping:
+# When it's set on True Objects can be read out
+# and mapped with the help of the Class that inherits the BaseModel
 #
+```
+
+Object-relational mapping is a technic from software development within it can be achieved that objects out of a object-oriented language can be saved in a RDBMS. The software that is in connection with the database can work as if it is an object database. In python there is the class library [SQLALchemy](https://www.sqlalchemy.org)
+
+```python
+alias_generator type: callable
+# Returns a alias for every field name
+schema_extra type: dict
+# Add as an example for the API documentation
+json_loads type: function
+# For decoding JSON
+json_dumps type: function
+# For encoding JSON
+json_encoders type: dict
+# For customised serialization like in this example:
+#
+#from datetime import datetime, timedelta
+#from pydantic import BaseModel
+#from pydantic.json import timedelta_isoformat
+#
+#
+#class WithCustomEncoders(BaseModel):
+#    dt: datetime
+#    diff: timedelta
+#
+#    class Config:
+#        json_encoders = {
+#            datetime: lambda v: v.timestamp(),
+#            timedelta: timedelta_isoformat,
+#        }
+#
+underscore_attrs_are_private type: boolean
+# Private attribute names must start with underscore to prevent conflicts with model fields:
+# both _attr and __attr__ are supported.
+copy_on_model_validation default: True
+# whether or not inherited models used as fields
+# should be reconstructed (copied) on validation instead of being kept untouched
+
+```
