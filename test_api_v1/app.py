@@ -89,7 +89,7 @@ async def create_user(user: UserModel = Body(...)):
     user = jsonable_encoder(user)
     new_user = await db["users"].insert_one(user)
     created_user = await db["users"].find_one({"_id": new_user.inserted_id})
-    return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_cat)
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_user)
 
 
 @app.get("/Users", response_description="List all Users and Owners")
